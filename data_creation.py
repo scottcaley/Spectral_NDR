@@ -34,7 +34,3 @@ def plot_2d(data):
     plt.show()
 
 
-
-data = create_data(spiralling_gaussian_2d, 2, [np.cbrt(x) for x in range(10, 3000)])
-plot_2d(data)
-

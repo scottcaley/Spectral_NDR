@@ -1,5 +1,6 @@
 import numpy as np
 import KNN
+import PCA
 
 
 
@@ -27,9 +28,9 @@ def SMO(A, b, knn, num_iterations = 10):
 
                 # Want to find optimal difference t to add to w[i] and subtract from w[j]
                 # I worked this out on paper
-                quadratic_term = A[i, i] - 2 * A[i, j] + A[j, j]
-                linear_term = 2 * A[i, i] * w[i] + 2 * A[i, j] * w[j] - 2 * A[i, j] * w[i] - 2 * A[j, j] * w[j] + b[i] - b[j]
-                t = - linear_term / (2.0 * quadratic_term)
+                quadratic_coef = A[i, i] - 2 * A[i, j] + A[j, j]
+                linear_coef = 2 * A[i, i] * w[i] + 2 * A[i, j] * w[j] - 2 * A[i, j] * w[i] - 2 * A[j, j] * w[j] + b[i] - b[j]
+                t = - linear_coef / (2.0 * quadratic_coef)
 
                 # boundary adjustments
                 if t > 0:
@@ -62,17 +63,10 @@ def NDR(X, d, k=5):
         W[i, :] = SMO(A, b, knn)
 
         
-    print(W)
     Phi = (np.eye(n) - W.T) @ (np.eye(n) - W)
 
-    # PCA on Phi
+    return PCA.Embedding_Transformation(Phi, d)
 
 
 
 
-
-X = np.array([[1, 2],
-              [3, 4],
-              [5, 4],
-              [3, 1]])
-NDR(X, 1, k=2)

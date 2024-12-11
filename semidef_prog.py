@@ -16,8 +16,8 @@ kdtree = KDTree(X)
 eta=[[0 for _1 in range(n)] for _2 in range(n)]
 for i in range(n):
     distance,indices = kdtree.query([X[i,:]], k=5)
-        for k in indices[0]:
-            eta[i][k]=1
+    for k in indices[0]:
+        eta[i][k]=1
     
 #Y, the output data from LLE
 Y = np.random.randint(low=-100,high=100, size=(n, m))

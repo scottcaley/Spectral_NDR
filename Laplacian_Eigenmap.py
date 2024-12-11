@@ -1,5 +1,6 @@
 import numpy as np
 import KNN
+import PCA
 
 
 
@@ -27,10 +28,10 @@ def NDR(X, d, k=5, variance=0.0):
     D_inv_sqrt = np.diag(1 / np.sqrt(np.diag(D)))
     Phi = np.eye(n) - D_inv_sqrt @ W @ D_inv_sqrt
 
-    # PCA on Phi
+    return PCA.Embedding_Transformation(Phi, d)
 
-X = np.array([[1, 2],
-              [3, 4],
-              [5, 4],
-              [3, 1]])
-NDR(X, 1, k=1, variance=1)
+
+
+
+
+

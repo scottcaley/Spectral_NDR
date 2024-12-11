@@ -1,6 +1,5 @@
 import numpy as np
-import KNN
-import PCA
+from sklearn.neighbors import KDTree
 
 
 
@@ -53,19 +52,23 @@ def NDR(X, d, k=5):
     k is the number of neighbors in KNN
     """
     n, p = X.shape
+    kdtree = KDTree(X)
+
     W = np.zeros((n, n))
-
     A = X @ X.T # for optimization later
-
     for i in range(n): # To find the weight matrix, each row is independently optimized
-        knn = KNN.Locate(X, i, k)
+        knn = kdtree.query([X[i,:]], k=k+1)[1][0] # get k neighbors that aren't itself
+        knn = knn[knn != i] # filter out itself
         b = -2 * X @ X[i]      
         W[i, :] = SMO(A, b, knn)
-
         
     Phi = (np.eye(n) - W.T) @ (np.eye(n) - W)
 
-    return PCA.Embedding_Transformation(Phi, d)
+    eigenvalues, eigenvectors = np.linalg.eig(Phi)
+    idx = np.argsort(eigenvalues)
+    eigenvectors_sorted = eigenvectors[:, idx]
+
+    return eigenvectors_sorted[:, 1:d+1]
 
 
 

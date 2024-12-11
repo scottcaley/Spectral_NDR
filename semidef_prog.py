@@ -6,7 +6,7 @@ from sklearn.neighbors import KDTree
 #KNN by KD tree, since it's faster in predicting.
 
 # The notations are the same as in the paper, where p is the dimension of x_i's, and m that of y_i's, and n is the number of x_i's.
-m,p,n=10,20,500
+m,p,n=2,3,10
 #X, the original data
 X = np.random.randint(low=-100,high=100, size=(n, p))
 # Build KD tree
@@ -52,7 +52,7 @@ for i in range(n):
 # The operator >> denotes matrix inequality.
 constraints = [P >> 0]
 constraints += [cp.trace(P) == 1]
-prob = cp.Problem(objective, constraints)
+prob = cp.Problem(cp.Minimize(objective), constraints)
 prob.solve()
 print("The optimal value is", prob.value)
 print("A solution P is")

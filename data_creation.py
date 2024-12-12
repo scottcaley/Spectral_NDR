@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 np.random.seed(0)
 
@@ -22,15 +21,5 @@ def spiralling_gaussian_2d(theta, a=0, b=1, c=1, covariance=np.eye(2)):
     mu = np.array([x, y])
     covariance = 0.2 * np.eye(2)
     return np.random.multivariate_normal(mu, covariance, 1)
-
-
-
-def plot_2d(data):
-    x = data[:, 0]
-    y = data[:, 1]
-
-    plt.scatter(x, y)
-    plt.grid(True)
-    plt.show()
 
 
